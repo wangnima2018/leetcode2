@@ -1,0 +1,37 @@
+
+<h3>题意<h3>
+<p>给出一个BST，需要把这个tree convert成为，每个node都是当前node的值，加上<p>
+
+<h3>解题<h3>
+<p>本质是在考察，一种顺序的tree traversal的形式：
+需要先递归右子数，然后进行当前值的变动，然后去递归到左子数<p>
+
+<h3>细节<h3>
+<p>sum的使用形式：self.sum<p>
+
+
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def convertBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        self.sum = 0
+        self.helper(root)
+        return root
+    
+    def helper(self,root):
+        if root is not None:
+            self.helper(root.right)
+            root.val += self.sum
+            self.sum = root.val
+            self.helper(root.left)
+```
