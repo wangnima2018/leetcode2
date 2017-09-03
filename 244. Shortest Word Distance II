@@ -1,0 +1,41 @@
+
+<h3>题意<h3>
+<p>类似于243. Shortest Word Distance.md，区别在于，这个API可能被经常call<p>
+
+<h3>解题<h3>
+<p>使用dictionary，存储对应于每个word，它们都出现在哪里的位置<p>
+
+<h3>细节<h3>
+<p>如果求绝对值： abs<p>
+
+```python
+class WordDistance(object):
+
+    def __init__(self, words):
+        """
+        :type words: List[str]
+        """
+        self.d = {}
+        for i in xrange(len(words)):
+            if words[i] in self.d:
+                self.d[words[i]].append(i)
+            else:
+                self.d[words[i]] = [i]
+                
+
+    def shortest(self, word1, word2):
+        """
+        :type word1: str
+        :type word2: str
+        :rtype: int
+        """
+        list1 = self.d[word1]
+        list2 = self.d[word2]
+        diff = sys.maxint
+        for e1 in list1:
+            for e2 in list2:
+                if abs(e1-e2) < diff:
+                    diff = abs(e1-e2)
+                    
+        return diff
+```
