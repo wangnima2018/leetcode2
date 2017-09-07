@@ -1,0 +1,48 @@
+
+
+<h3>题意<h3>
+<p>给两个Tree，按照对应Child值相加的方式，组成新的tree<p>
+
+<h3>解题<h3>
+<p>使用递归法，并且如果有一个节点为None，那么我们就focus on另外对应的节点<p>
+
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def mergeTrees(self, t1, t2):
+        """
+        :type t1: TreeNode
+        :type t2: TreeNode
+        :rtype: TreeNode
+        """
+        root = self.helper(t1,t2)
+        return root
+    
+    def helper(self,t1,t2):
+        if t1 is None and t2 is None:
+            return None
+    
+        if t1 is None:
+            root = TreeNode(t2.val)
+            root.left = self.helper(t1,t2.left)
+            root.right = self.helper(t1,t2.right)
+            return root
+            
+        if t2 is None:
+            root = TreeNode(t1.val)
+            root.left = self.helper(t1.left,t2)
+            root.right = self.helper(t1.right,t2)
+            return root
+        
+        if t1 is not None and t2 is not None:
+            root = TreeNode(t1.val + t2.val)
+            root.left = self.helper(t1.left,t2.left)
+            root.right = self.helper(t1.right,t2.right)
+            return root
+```
