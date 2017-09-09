@@ -1,0 +1,37 @@
+<h3>题意<h3>
+<p>给出intervals是meeting time，找出需要多少个房间才能开这些meeting<p>
+
+<h3>解题<h3>
+<p>把这些intervals，按照start time sort,然后使用priorityQ，每次记录最小的那个end时间，如果有一个start的时间，
+大于等于最小的end时间，就不增加房间数[heapq.heapreplace(heap,i.end)]，否则就需要增加一个房间数[ heapq.heappush(heap,i.end)]<p>
+
+<h3>细节<h3>
+<p>how to use priorityQ, their api<p>
+
+
+```python
+class Solution(object):
+    def minMeetingRooms(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: int
+        """
+ 
+        if len(intervals) == 0:
+            return 0
+        # note , need to remember how to use it: , the sorted, with lambda func
+        intervals = sorted(intervals,key = lambda x : x.start)
+        heap = []
+        # python heap is a minValue priority Q
+        # Python uses zero-based indexing. (b) Our pop method returns the smallest item, not the largest (called a “min heap” in textbooks; 
+        
+        for i in intervals:
+            if heap and i.start >= heap[0]:
+                # means two intervals can use the same room
+                heapq.heapreplace(heap,i.end)
+                # heap replace can be treated as, heappop and heappush
+            else:
+                # a new root is needed
+                heapq.heappush(heap,i.end)
+        return len(heap)
+```
