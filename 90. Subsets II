@@ -1,0 +1,70 @@
+<h3>题意<h3>
+<p>
+Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+
+Note: The solution set must not contain duplicate subsets.
+
+For example,
+If nums = [1,2,2], a solution is:
+
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+
+<p>
+
+
+
+
+<h3>解题<h3>
+<p>与subset不同的是，可能有重复的元素，怎么办？
+            # note:如果遇到了重复的元素，那么开始点，就需要是那个startIndex元素
+            # 否则就等到下一轮，再进行起始
+<p>
+
+
+<h3>细节<h3>
+<p>
+            if i != startIndex and nums[i] == nums[i-1]:
+                continue
+<p>
+
+
+
+
+```python
+class Solution(object):
+    def subsetsWithDup(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        
+        resl = []
+        curl = []
+        nums.sort()
+        self.helper(nums,resl,curl,0)
+        return resl
+        
+    def helper(self,nums,resl,curl,startIndex):
+        if startIndex > len(nums):
+            return
+        newl = curl[:]
+
+        resl.append(newl)
+        for i in xrange(startIndex,len(nums)):
+            # note:如果遇到了重复的元素，那么开始点，就需要是那个startIndex元素
+            # 否则就等到下一轮，再进行起始
+            if i != startIndex and nums[i] == nums[i-1]:
+                continue
+            curl.append(nums[i])
+            self.helper(nums,resl,curl,i+1)
+            del curl[-1]
+```
+
+
